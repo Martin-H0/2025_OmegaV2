@@ -1,0 +1,55 @@
+ kraj_kod = {
+        'Praha': 1,
+        'Moravskoslezsko': 2,
+        'Severozápad': 3,
+        'Jihozápad': 4,
+        'Severovýchod': 5,
+        'Střední Morava': 6,
+        'Střední Čechy': 7,
+        'Jihovýchod': 8,
+    }
+
+
+kod_velkeho_mesta = {
+    "Praha": {"kod": 1, "lat": 50.0755, "lon": 14.4378},
+    "Brno": {"kod": 2, "lat": 49.1951, "lon": 16.6068},
+    "Ostrava": {"kod": 3, "lat": 49.8209, "lon": 18.2625},
+    "Plzeň": {"kod": 4, "lat": 49.7384, "lon": 13.3736},
+    "Liberec": {"kod": 5, "lat": 50.7663, "lon": 15.0543},
+    "Olomouc": {"kod": 6, "lat": 49.5937, "lon": 17.2508},
+    "České Budějovice": {"kod": 7, "lat": 48.9764, "lon": 14.5065},
+    "Hradec Králové": {"kod": 8, "lat": 50.2091, "lon": 15.8323},
+    "Ústí nad Labem": {"kod": 9, "lat": 50.6608, "lon": 14.0313},
+    "Pardubice": {"kod": 10, "lat": 50.0343, "lon": 15.7812}
+}
+
+
+je_velke_mesto  bolewan je nebo není ve velkém mněstě
+
+
+
+vzdalenost_centrum_km
+
+
+
+
+možná by byůlo lepší se užvatele 
+
+
+
+projekt/
+|-- config.py                    # Konfigurační soubor
+|-- run.py                       # Hlavní spouštěcí soubor
+|-- models/                      # Adresář pro modely
+|   `-- best_random_forest_model_RMSE_3377.6362.pkl
+|-- App/
+|   |-- backend/
+|   |   `-- app.py               # Backend aplikace
+|   `-- frontend/
+|       |-- templates/
+|       |   `-- index.html       # HTML šablona
+|       `-- static/
+|           |-- css/
+|           |   `-- style.css    # CSS styly
+|           `-- js/
+|               `-- main.js      # JavaScript kód

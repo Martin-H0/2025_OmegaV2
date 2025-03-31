@@ -1,0 +1,18 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Načtení dat; předpokládáme, že dataset obsahuje všechny potřebné sloupce
+data = pd.read_csv("houses_martin_lokace_v10.csv")
+
+# Vybrání pouze numerických sloupců
+data_numeric = data.select_dtypes(include=["float64", "int64"])
+
+# Výpočet korelační matice
+correlation_matrix = data_numeric.corr()
+
+# Vykreslení korelační matice pomocí heatmap
+plt.figure(figsize=(12, 10))
+sns.heatmap(correlation_matrix, annot=True, fmt=".2f", cmap="viridis")
+plt.title("Korelační matice")
+plt.show()
