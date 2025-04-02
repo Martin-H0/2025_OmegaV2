@@ -7,6 +7,12 @@
     
 
     <link rel="icon" type="image/x-icon" href="/app/frontend/static/favicon.ico">
+    <link rel="icon" type="image/png" href="/app/frontend/static/favicon.png">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='favicon.png') }}">
+    <link rel="icon" sizes="192x192" href="{{ url_for('static', filename='media/android-icon-192x192.png') }}">
+    <link rel="icon" sizes="512x512" href="{{ url_for('static', filename='media/android-icon-512x512.png') }}">
+
 
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
