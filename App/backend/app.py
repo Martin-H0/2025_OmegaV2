@@ -11,20 +11,26 @@ import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 import config
 
+# Import loggeru
+from App.backend.logger import PredictionLogger
+
 app = Flask(__name__, template_folder='../frontend/templates', static_folder='../frontend/static')
+
+# Inicializace loggeru
+logger = PredictionLogger(log_dir=os.path.join(os.path.dirname(__file__), '../../logs'))
 
 # Načtení natrénovaného modelu
 def load_model():
     try:
         with open(config.MODEL_PATH, 'rb') as file:
             model = pickle.load(file)
-            print(f"Model načten z: {config.MODEL_PATH}")
+            logger.log_model_load(config.MODEL_PATH, True)
             return model
     except FileNotFoundError:
-        print(f"CHYBA: Model {config.MODEL_PATH} nebyl nalezen!")
+        logger.log_model_load(config.MODEL_PATH, False)
         return None
     except Exception as e:
-        print(f"CHYBA při načítání modelu: {str(e)}")
+        logger.log_error(f"Chyba při načítání modelu: {str(e)}")
         return None
 
 # Načtení modelu při startu aplikace
@@ -56,22 +62,39 @@ def zjisti_kraj(lat, lon):
         kraj_kod = config.KRAJE_KODY.get(kraj_nazev, 0)
         return kraj_kod, kraj_nazev
     except Exception as e:
-        print(f"Chyba při zjišťování kraje: {e}")
+        logger.log_error(f"Chyba při zjišťování kraje: {e}")
         return 0, "Neznámý"
 
 # Základní routy
 @app.route('/')
 def index():
+    client_ip = request.remote_addr
+    logger.logger.info(f"Přístup na hlavní stránku z IP: {client_ip}")
     return render_template('index.html')
+
+@app.route('/static/<path:filename>')
+def static_files(filename):
+    client_ip = request.remote_addr
+    logger.logger.debug(f"Požadavek na statický soubor: {filename}, IP: {client_ip}")
+    return send_from_directory(app.static_folder, filename)
 
 @app.route('/predict', methods=['POST'])
 def predict():
+    client_ip = request.remote_addr
+    start_time = time.time()
+    
     try:
+        # Získání dat z požadavku
+        data = request.json
+        
+        # Logování požadavku
+        logger.log_request(data, client_ip)
+        
         # Kontrola, zda je model načten
         if model is None:
-            return jsonify({'error': 'Model není načten. Zkontrolujte konfiguraci.'}), 500
-
-        data = request.json
+            error_msg = 'Model není načten. Zkontrolujte konfiguraci.'
+            logger.log_error(error_msg, client_ip, data)
+            return jsonify({'error': error_msg}), 500
 
         # Zpracování základních parametrů od uživatele
         new = int(data.get('new', 0))
@@ -130,20 +153,56 @@ def predict():
             'nazev_velkeho_mesta': nejblizsi_mesto
         }
 
+        # Výpočet délky zpracování
+        processing_time = time.time() - start_time
+        
+        # Logování odpovědi
+        logger.log_response(response, client_ip, processing_time)
+
         return jsonify(response)
 
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        # Logování chyby
+        error_msg = str(e)
+        logger.log_error(error_msg, client_ip, request.json if hasattr(request, 'json') else None)
+        return jsonify({'error': error_msg}), 500
 
 @app.route('/reload_model', methods=['GET'])
 def reload_model():
     """Endpoint pro ruční znovunačtení modelu."""
+    client_ip = request.remote_addr
+    logger.logger.info(f"Požadavek na znovunačtení modelu z IP: {client_ip}")
+    
     global model
     model = load_model()
     if model:
-        return jsonify({'status': 'success', 'message': f'Model úspěšně znovu načten z {config.MODEL_PATH}'})
+        response = {'status': 'success', 'message': f'Model úspěšně znovu načten z {config.MODEL_PATH}'}
+        logger.logger.info(f"Model úspěšně znovu načten z {config.MODEL_PATH}")
+        return jsonify(response)
     else:
-        return jsonify({'status': 'error', 'message': 'Nepodařilo se znovu načíst model'}), 500
+        response = {'status': 'error', 'message': 'Nepodařilo se znovu načíst model'}
+        logger.logger.error("Nepodařilo se znovu načíst model")
+        return jsonify(response), 500
+
+# Pomocný endpoint pro kontrolu loggeru
+@app.route('/check_logs', methods=['GET'])
+def check_logs():
+    """Endpoint pro kontrolu, zda logování funguje."""
+    if not request.remote_addr.startswith('127.0.0.1'):
+        return jsonify({'error': 'Unauthorized'}), 403
+    
+    try:
+        log_files = os.listdir(os.path.join(os.path.dirname(__file__), '../../logs'))
+        return jsonify({
+            'status': 'success',
+            'log_files': log_files,
+            'message': 'Logování je nastaveno správně.'
+        })
+    except Exception as e:
+        return jsonify({
+            'status': 'error',
+            'message': f'Chyba při kontrole logů: {str(e)}'
+        }), 500
 
 # Pro přímé spuštění
 if __name__ == '__main__':
@@ -153,64 +212,37 @@ if __name__ == '__main__':
 
 
 
-
-
-# from flask import Flask, request, jsonify, render_template
+# from flask import Flask, request, jsonify, render_template, send_from_directory
 # import pickle
 # import pandas as pd
 # import requests
 # import time
 # from math import radians, sin, cos, sqrt, atan2
 # import os
+# import sys
 
-# app = Flask(__name__)
+# # Přidání cesty pro import konfiguračního souboru
+# sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
+# import config
+
+# app = Flask(__name__, template_folder='../frontend/templates', static_folder='../frontend/static')
 
 # # Načtení natrénovaného modelu
-# model_path = "best_random_forest_model_RMSE_3377.6362.pkl"
-# try:
-#     with open(model_path, 'rb') as file:
-#         model = pickle.load(file)
-# except FileNotFoundError:
-#     print(f"Model {model_path} nebyl nalezen!")
+# def load_model():
+#     try:
+#         with open(config.MODEL_PATH, 'rb') as file:
+#             model = pickle.load(file)
+#             print(f"Model načten z: {config.MODEL_PATH}")
+#             return model
+#     except FileNotFoundError:
+#         print(f"CHYBA: Model {config.MODEL_PATH} nebyl nalezen!")
+#         return None
+#     except Exception as e:
+#         print(f"CHYBA při načítání modelu: {str(e)}")
+#         return None
 
-# # Slovník velkých měst
-# velka_mesta = {
-#     "Praha": {"kod": 1, "lat": 50.0755, "lon": 14.4378},
-#     "Brno": {"kod": 2, "lat": 49.1951, "lon": 16.6068},
-#     "Ostrava": {"kod": 3, "lat": 49.8209, "lon": 18.2625},
-#     "Plzeň": {"kod": 4, "lat": 49.7384, "lon": 13.3736},
-#     "Liberec": {"kod": 5, "lat": 50.7663, "lon": 15.0543},
-#     "Olomouc": {"kod": 6, "lat": 49.5937, "lon": 17.2508},
-#     "České Budějovice": {"kod": 7, "lat": 48.9764, "lon": 14.5065},
-#     "Hradec Králové": {"kod": 8, "lat": 50.2091, "lon": 15.8323},
-#     "Ústí nad Labem": {"kod": 9, "lat": 50.6608, "lon": 14.0313},
-#     "Pardubice": {"kod": 10, "lat": 50.0343, "lon": 15.7812}
-# }
-
-# # Mapování krajů
-# kraje_kody = {
-#     'Praha': 1,
-#     'Moravskoslezský kraj': 2,  # Upraveno pro formát z OpenStreetMap
-#     'Moravskoslezsko': 2,
-#     'Ústecký kraj': 3,          # Přidáno pro formát z OpenStreetMap
-#     'Karlovarský kraj': 3,      # Přidáno pro formát z OpenStreetMap
-#     'Severozápad': 3,
-#     'Plzeňský kraj': 4,         # Přidáno pro formát z OpenStreetMap
-#     'Jihočeský kraj': 4,        # Přidáno pro formát z OpenStreetMap
-#     'Jihozápad': 4,
-#     'Liberecký kraj': 5,        # Přidáno pro formát z OpenStreetMap
-#     'Královéhradecký kraj': 5,  # Přidáno pro formát z OpenStreetMap
-#     'Pardubický kraj': 5,       # Přidáno pro formát z OpenStreetMap
-#     'Severovýchod': 5,
-#     'Olomoucký kraj': 6,        # Přidáno pro formát z OpenStreetMap
-#     'Zlínský kraj': 6,          # Přidáno pro formát z OpenStreetMap
-#     'Střední Morava': 6,
-#     'Středočeský kraj': 7,      # Přidáno pro formát z OpenStreetMap
-#     'Střední Čechy': 7,
-#     'Jihomoravský kraj': 8,     # Přidáno pro formát z OpenStreetMap
-#     'Kraj Vysočina': 8,         # Přidáno pro formát z OpenStreetMap
-#     'Jihovýchod': 8,
-# }
+# # Načtení modelu při startu aplikace
+# model = load_model()
 
 # # Funkce pro výpočet vzdálenosti mezi dvěma body (Haversine formula)
 # def vypocet_vzdalenosti(lat1, lon1, lat2, lon2):
@@ -225,8 +257,8 @@ if __name__ == '__main__':
 # # API pro získání kraje
 # def zjisti_kraj(lat, lon):
 #     try:
-#         url = f"https://nominatim.openstreetmap.org/reverse?lat={lat}&lon={lon}&format=json&accept-language=cs"
-#         headers = {'User-Agent': 'HousePricePredictor/1.0'}
+#         url = f"{config.OSM_API_URL}?lat={lat}&lon={lon}&format=json&accept-language=cs"
+#         headers = {'User-Agent': config.OSM_USER_AGENT}
 #         response = requests.get(url, headers=headers)
 #         data = response.json()
 
@@ -235,7 +267,7 @@ if __name__ == '__main__':
 #         if not kraj_nazev:
 #             kraj_nazev = data.get('address', {}).get('county', 'Neznámý')
 
-#         kraj_kod = kraje_kody.get(kraj_nazev, 0)
+#         kraj_kod = config.KRAJE_KODY.get(kraj_nazev, 0)
 #         return kraj_kod, kraj_nazev
 #     except Exception as e:
 #         print(f"Chyba při zjišťování kraje: {e}")
@@ -249,6 +281,10 @@ if __name__ == '__main__':
 # @app.route('/predict', methods=['POST'])
 # def predict():
 #     try:
+#         # Kontrola, zda je model načten
+#         if model is None:
+#             return jsonify({'error': 'Model není načten. Zkontrolujte konfiguraci.'}), 500
+
 #         data = request.json
 
 #         # Zpracování základních parametrů od uživatele
@@ -269,7 +305,7 @@ if __name__ == '__main__':
 #         nejblizsi_mesto = ""
 #         nejblizsi_kod = 0
 
-#         for mesto, info in velka_mesta.items():
+#         for mesto, info in config.VELKA_MESTA.items():
 #             vzdalenost = vypocet_vzdalenosti(lat, lon, info['lat'], info['lon'])
 #             if vzdalenost < min_vzdalenost:
 #                 min_vzdalenost = vzdalenost
@@ -282,14 +318,16 @@ if __name__ == '__main__':
 
 #         # Vytvoření DataFrame pro predikci
 #         input_data = pd.DataFrame({
+#             'lat': [lat],
+#             'lon': [lon],
 #             'new': [new],
 #             'area': [area],
-#             'room_number': [room_number],
-#             'kitchen_number': [kitchen_number],
 #             'kraj_kod': [kraj_kod],
 #             'je_velke_mesto': [je_velke_mesto],
 #             'vzdalenost_centrum_km': [vzdalenost_centrum_km],
-#             'kod_velkeho_mesta': [kod_velkeho_mesta]
+#             'kod_velkeho_mesta': [kod_velkeho_mesta],
+#             'room_number': [room_number],
+#             'kitchen_number': [kitchen_number]
 #         })
 
 #         # Predikce ceny
@@ -311,10 +349,19 @@ if __name__ == '__main__':
 #     except Exception as e:
 #         return jsonify({'error': str(e)}), 500
 
+# @app.route('/reload_model', methods=['GET'])
+# def reload_model():
+#     """Endpoint pro ruční znovunačtení modelu."""
+#     global model
+#     model = load_model()
+#     if model:
+#         return jsonify({'status': 'success', 'message': f'Model úspěšně znovu načten z {config.MODEL_PATH}'})
+#     else:
+#         return jsonify({'status': 'error', 'message': 'Nepodařilo se znovu načíst model'}), 500
+
+# # Pro přímé spuštění
 # if __name__ == '__main__':
-#     app.run(debug=True)
-
-
+#     app.run(debug=config.DEBUG, host=config.HOST, port=config.PORT)
 
 
 

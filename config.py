@@ -3,8 +3,16 @@ MODEL_PATH = "models/best_random_forest_model_RMSE_3377.6362.pkl"
 
 # Nastavení Flask aplikace
 DEBUG = True
-HOST = "127.0.0.1"
-PORT = 5000
+HOST = "127.0.0.1"          # ip addresa hostu
+PORT = 5000                 # port na kter0m pob269 veb
+
+
+# Nastavení logování
+LOG_DIR = 'logs'                                  # Adresář pro ukládání logů
+LOG_LEVEL = 'INFO'                                # Úroveň logování (DEBUG, INFO, WARNING, ERROR, CRITICAL)
+API_LOG_FORMAT = '%(asctime)s - %(message)s'      # Formát záznamu pro API logy
+ERROR_LOG_FORMAT = '%(asctime)s - %(levelname)s - %(message)s'  # Formát záznamu pro chybové logy
+
 
 # Nastavení OpenStreetMap API
 OSM_API_URL = "https://nominatim.openstreetmap.org/reverse"

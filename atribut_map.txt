@@ -37,10 +37,12 @@ možná by byůlo lepší se užvatele
 
 
 
-projekt/
+2025_Omegav2/
+|-- requirements.txt
+|-- install.py                   # Instalační soubor (vitvoří venv a nainstaluje vše z requirements.txt)
 |-- config.py                    # Konfigurační soubor
 |-- run.py                       # Hlavní spouštěcí soubor
-|-- models/                      # Adresář pro modely
+|-- models/                      # Adresář pro modely (regrese)
 |   `-- best_random_forest_model_RMSE_3377.6362.pkl
 |-- App/
 |   |-- backend/
