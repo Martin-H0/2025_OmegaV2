@@ -39,26 +39,29 @@ možná by byůlo lepší se užvatele
 omega_project/
 ├── app/
 │   ├── backend/
-│   │   ├── app.py                          # Hlavní backend aplikace (Flask)
-│   │   ├── logger.py                       # Modul pro logování
+│   │   ├── app.py                                          # Hlavní backend aplikace (Flask)
+│   │   ├── logger.py                                       # Modul pro logování
 │   ├── frontend/
-│   │   ├── static/                         # Statické soubory (CSS, JS, favicon, obrázky)
+│   │   ├── static/                                         # Statické soubory (CSS, JS, favicon, obrázky)
 │   │   │   ├── css/
-│   │   │   │   └── style.css               # Upravené stylování webu (včetně fixního footeru)
+│   │   │   │   └── style.css                               # Upravené stylování webu (včetně fixního footeru)
 │   │   │   ├── js/
-│   │   │   │   └── main.js                 # JavaScript pro interaktivní funkce (např. mapa)
-│   │   │   ├── media/                      # Nová složka pro obrázky
+│   │   │   │   └── main.js                                 # JavaScript pro interaktivní funkce (např. mapa)
+│   │   │   ├── media/                                      # Nová složka pro obrázky
 │   │   │   │   └── logo/
 │   │   │   │       └── logo_BytMetric_v5_AdobeExpress.png  # Logo aplikace
-│   │   │   └── favicon.ico                 # Ikona webu
-│   │   └── templates/                      # HTML šablony (Jinja2)
-│   │       ├── header.html                 # Sdílený header (navigace)
-│   │       ├── footer.html                 # Upravený sdílený footer (fixní na spodní části stránky)
-│   │       ├── index.html                  # Úvodní stránka (welcome page)
-│   │       ├── estimate.html               # Stránka pro odhad ceny nemovitostí (s logem)
-│   │       └── about.html                  # Stránka "O projektu"
+│   │   │   └── favicon.ico                                 # Ikona webu
+│   │   │
+│   │   └── templates/                                      # HTML šablony (Jinja2)
+│   │       ├── header.html                                 # Sdílený header (navigace)
+│   │       ├── footer.html                                 # Upravený sdílený footer (fixní na spodní části stránky)
+│   │       ├── index.html                                  # Úvodní stránka (welcome page)
+│   │       ├── estimate.html                               # Stránka pro odhad ceny nemovitostí (s logem)
+│   │       └── about.html                                  # Stránka "O projektu"
 │   └── models/
-│       └── best_random_forest_model_RMSE_3377.6362.pkl  # Trénovaný model Random Forest
-├── config.py                               # Konfigurační soubor (nastavení aplikace, API, logování)
-├── run.py                                  # Spouštěcí soubor aplikace
-└── app.log                                 # Logovací soubor (generovaný při běhu aplikace)
+│       └── best_random_forest_model_RMSE_3377.6362.pkl     # Trénovaný model Random Forest
+├── config.py                                               # Konfigurační soubor (nastavení aplikace, API, logování)
+├── run.py                                                  # Spouštěcí soubor aplikace
+├── install.py
+├── requirements.txt  
+└── app.log                                                 # Logovací soubor (generovaný při běhu aplikace)

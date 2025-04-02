@@ -1,45 +1,36 @@
+/* Fixní header */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1030; /* Zajistí, že header bude nad ostatním obsahem */
+}
+
+/* Základní styl pro body */
 body {
+    padding-top: 56px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Zajistí, že stránka bude mít minimální výšku okna */
+    margin: 0;
     background-color: #f8f9fa;
-    margin-bottom: 80px; /* Zmenšeno kvůli nižšímu footeru */
 }
 
-.card {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 0.25rem;
-    margin-bottom: 1.5rem;
-}
-
-#map {
-    border-radius: 0.25rem;
-}
-
-#predictedPrice {
-    font-size: 2rem;
-    color: #0d6efd;
-    font-weight: bold;
-}
-
-.marker-position {
-    background-color: #ff0000;
-    border-radius: 50%;
-    border: 2px solid #ffffff;
-    width: 15px;
-    height: 15px;
+/* Obsah stránky */
+.container {
+    flex: 1; /* Zajistí, že obsah stránky se roztáhne nad footer */
 }
 
 footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-    z-index: 1000;
     background-color: #212529;
     color: white;
     border-top: 1px solid #dee2e6;
     font-size: 0.9rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
 }
+
 
 footer h5 {
     font-size: 1rem;
@@ -63,6 +54,15 @@ footer .contact-info {
     margin-right: 1.5rem;
 }
 
+/* Skrytí obsahu na menších obrazovkách */
+@media (max-width: 768px) {
+    footer .d-none {
+        display: none !important; /* Skryje obsah na menších obrazovkách */
+    }
+}
+
+
+/* Logo */
 .centered-logo {
     max-height: 276px;
     width: auto;
@@ -74,4 +74,18 @@ footer .contact-info {
 .img-fluid {
     max-width: 100%;
     height: auto;
+}
+
+
+
+/* 404 */
+
+img.img-fluid {
+    max-width: 500px;
+    height: auto;
+}
+
+.btn-primary {
+    padding: 0.5rem 1.5rem;
+    font-size: 1.2rem;
 }
