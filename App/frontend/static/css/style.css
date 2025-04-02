@@ -63,14 +63,15 @@ footer .contact-info {
     margin-right: 1.5rem;
 }
 
-.btn-primary {
-    padding: 0.5rem 1.5rem;
-}
-
 .centered-logo {
     max-height: 276px;
     width: auto;
     display: block;
     margin-left: auto;
     margin-right: auto;
+}
+
+.img-fluid {
+    max-width: 100%;
+    height: auto;
 }

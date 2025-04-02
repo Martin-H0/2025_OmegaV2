@@ -937,3 +937,31 @@ Feature names seen at fit time, yet now missing:
 2025-04-02 17:40:10,848 - omega_app - INFO - Mapped to district: Jihovýchod (code: 8)
 2025-04-02 17:40:10,850 - omega_app - INFO - Nearest city: Brno, distance: 22.69 km
 2025-04-02 17:40:10,866 - omega_app - INFO - Predicted price: 8418.181818181818
+2025-04-02 17:47:11,439 - omega_app - INFO - Model loaded from: d:\dokumenty\program\2025_OmegaV2\app/models/best_random_forest_model_RMSE_3377.6362.pkl
+2025-04-02 17:47:12,539 - omega_app - INFO - Model loaded from: d:\dokumenty\program\2025_OmegaV2\app/models/best_random_forest_model_RMSE_3377.6362.pkl
+2025-04-02 17:47:15,352 - omega_app - INFO - Access to estimate page
+2025-04-02 17:47:17,675 - omega_app - INFO - Access to home page
+2025-04-02 17:47:32,826 - omega_app - INFO - Access to estimate page
+2025-04-02 17:48:23,862 - omega_app - INFO - Prediction data received: {'new': 0, 'area': 100, 'room_number': 4, 'kitchen_number': 1, 'lat': 49.29020210901091, 'lon': 14.458007812500002}
+2025-04-02 17:48:23,862 - omega_app - INFO - OSM API request: https://nominatim.openstreetmap.org/reverse?lat=49.29020210901091&lon=14.458007812500002&format=json&accept-language=cs
+2025-04-02 17:48:24,126 - omega_app - INFO - Region detected: Jihozápad
+2025-04-02 17:48:24,126 - omega_app - INFO - Mapped to district: Jihozápad (code: 4)
+2025-04-02 17:48:24,126 - omega_app - INFO - Nearest city: Èeské Budìjovice, distance: 35.07 km
+2025-04-02 17:48:24,144 - omega_app - INFO - Predicted price: 13500.0
+2025-04-02 17:48:29,532 - omega_app - INFO - Prediction data received: {'new': 0, 'area': 100, 'room_number': 4, 'kitchen_number': 1, 'lat': 50.02676614458723, 'lon': 14.416809082031252}
+2025-04-02 17:48:29,532 - omega_app - INFO - OSM API request: https://nominatim.openstreetmap.org/reverse?lat=50.02676614458723&lon=14.416809082031252&format=json&accept-language=cs
+2025-04-02 17:48:29,714 - omega_app - INFO - Region detected: Praha
+2025-04-02 17:48:29,714 - omega_app - INFO - Mapped to district: Praha (code: 1)
+2025-04-02 17:48:29,714 - omega_app - INFO - Nearest city: Praha, distance: 5.62 km
+2025-04-02 17:48:29,730 - omega_app - INFO - Predicted price: 30600.0
+2025-04-02 17:48:39,638 - omega_app - INFO - Access to home page
+2025-04-02 17:48:40,739 - omega_app - INFO - Access to home page
+2025-04-02 17:48:41,925 - omega_app - INFO - Access to estimate page
+2025-04-02 17:48:44,124 - omega_app - INFO - Access to home page
+2025-04-02 17:48:45,596 - omega_app - INFO - Access to estimate page
+2025-04-02 17:48:46,426 - omega_app - INFO - Access to home page
+2025-04-02 17:48:48,688 - omega_app - INFO - Access to home page
+2025-04-02 17:48:50,241 - omega_app - INFO - Access to estimate page
+2025-04-02 17:51:00,064 - omega_app - INFO - Access to home page
+2025-04-02 17:51:08,579 - omega_app - INFO - Access to estimate page
+2025-04-02 17:51:34,554 - omega_app - INFO - Access to home page
