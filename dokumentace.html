@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dokumentace projektu BytMetric.cz</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        h1, h2, h3 {
+            color: #0d6efd;
+        }
+        pre {
+            background-color: #e9ecef;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mb-4">Dokumentace projektu BytMetric.cz</h1>
+
+        <hr>
+
+        <h2>1. Základní informace o projektu</h2>
+        <p><strong>Název projektu:</strong> BytMetric.cz – Inteligentní odhad cen pronájmů v České republice</p>
+        <p><strong>Autor:</strong> Martin Hornch</p>
+        <p><strong>Kontaktní údaje:</strong> info@bytmetric.cz</p>
+        <p><strong>Datum vypracování:</strong> 02.04.2025</p>
+        <p><strong>Název školy:</strong> Střední průmyslová škola elektrotechnická Ječná 30</p>
+        <p><strong>Typ projektu:</strong> Školní projekt</p>
+
+        <hr>
+
+        <h2>2. Specifikace požadavků uživatele</h2>
+        <ul>
+            <li><strong>Odhad ceny pronájmu nemovitostí:</strong>
+                <ul>
+                    <li>Uživatel zadá parametry nemovitosti (plocha, počet pokojů, počet kuchyní, novostavba).</li>
+                    <li>Uživatel označí lokaci nemovitosti na interaktivní mapě.</li>
+                    <li>Aplikace vypočítá odhad ceny pronájmu pomocí trénovaného modelu Random Forest.</li>
+                </ul>
+            </li>
+            <li><strong>Responzivní design:</strong> Aplikace musí být plně responzivní a přizpůsobitelná různým velikostem obrazovek.</li>
+            <li><strong>Navigace:</strong> Uživatel se může pohybovat mezi stránkami pomocí fixního headeru.</li>
+            <li><strong>404 stránka:</strong> Pokud uživatel navštíví neexistující URL, zobrazí se stránka s chybou 404.</li>
+        </ul>
+
+        <hr>
+
+        <h2>3. Architektura aplikace</h2>
+        <h3>Popis architektury:</h3>
+        <p>Aplikace je rozdělena na <strong>backend</strong> a <strong>frontend</strong> části:</p>
+        <h4>Backend:</h4>
+        <ul>
+            <li><strong>Flask:</strong> Webový framework pro obsluhu HTTP požadavků.</li>
+            <li><strong>Random Forest model:</strong> Trénovaný model pro odhad ceny pronájmu.</li>
+            <li><strong>Logger:</strong> Modul pro logování chyb a událostí.</li>
+        </ul>
+        <h4>Frontend:</h4>
+        <ul>
+            <li><strong>HTML:</strong> Šablony pro jednotlivé stránky.</li>
+            <li><strong>CSS:</strong> Stylování aplikace.</li>
+            <li><strong>JavaScript:</strong> Interaktivní funkce (např. práce s mapou).</li>
+            <li><strong>Bootstrap:</strong> Framework pro responzivní design.</li>
+        </ul>
+
+        <h3>UML diagramy</h3>
+        <h4>Use Case diagram:</h4>
+        <pre>
+graph TD
+    Uživatel --> Zadání parametrů nemovitosti
+    Uživatel --> Označení lokace na mapě
+    Uživatel --> Zobrazení odhadu ceny
+    Uživatel --> Navigace mezi stránkami
+    Uživatel --> Zobrazení 404 stránky
+        </pre>
+
+        <h4>Class diagram:</h4>
+        <pre>
+classDiagram
+    class FlaskApp {
+        +run()
+        +predict()
+        +reload_model()
+    }
+    class RandomForestModel {
+        +load_model()
+        +predict()
+    }
+    class Logger {
+        +info()
+        +error()
+        +warning()
+    }
+    FlaskApp --> RandomForestModel
+    FlaskApp --> Logger
+        </pre>
+
+        <hr>
+
+        <h2>4. Použití aplikace</h2>
+        <h3>Popis chodu aplikace:</h3>
+        <ol>
+            <li><strong>Zadání parametrů nemovitosti:</strong> Uživatel vyplní formulář s parametry nemovitosti (plocha, počet pokojů, počet kuchyní, novostavba).</li>
+            <li><strong>Označení lokace na mapě:</strong> Uživatel klikne na mapu, aby označil lokaci nemovitosti.</li>
+            <li><strong>Výpočet odhadu ceny:</strong> Backend zpracuje data a použije model Random Forest k výpočtu odhadu ceny.</li>
+            <li><strong>Zobrazení výsledků:</strong> Uživatel vidí odhad ceny pronájmu a další informace o lokalitě.</li>
+        </ol>
+
+        <hr>
+
+        <h2>5. Databáze</h2>
+        <p>Aplikace <strong>nepoužívá databázi</strong>. Veškeré výpočty probíhají na základě dat zadaných uživatelem a trénovaného modelu Random Forest.</p>
+
+        <hr>
+
+        <h2>6. Konfigurace aplikace</h2>
+        <h3>Konfigurační soubor:</h3>
+        <p><strong>config.py</strong> obsahuje:</p>
+        <ul>
+            <li><strong>Nastavení aplikace:</strong> DEBUG, HOST, PORT</li>
+            <li><strong>Cesty k souborům:</strong>
+                <ul>
+                    <li>Model: app/models/best_random_forest_model_RMSE_3377.6362.pkl</li>
+                    <li>Logy: app.log</li>
+                </ul>
+            </li>
+            <li><strong>API nastavení:</strong> URL pro OpenStreetMap: https://nominatim.openstreetmap.org/reverse</li>
+            <li><strong>Mapování krajů a distriktů:</strong> Slovníky pro mapování názvů krajů na kódy.</li>
+        </ul>
+
+        <hr>
+
+        <h2>7. Instalace a spuštění aplikace</h2>
+        <h3>Instalace:</h3>
+        <ol>
+            <li>Nainstalujte požadované knihovny a venv:
+                <pre>python install.py</pre>
+            </li>
+        </ol>
+        <h3>Spuštění:</h3>
+        <ol>
+            <li>Spusťte aplikaci příkazem:
+                <pre>python run.py</pre>
+            </li>
+            <li>Otevřete prohlížeč a přejděte na adresu:
+                <pre>http://127.0.0.1:5000/</pre>
+            </li>
+        </ol>
+
+        <hr>
+
+        <h2>8. Chybové stavy</h2>
+        <h3>Možné chyby:</h3>
+        <ul>
+            <li><strong>Model není načten:</strong>
+                <ul>
+                    <li>Chyba: Model není načten. Zkontrolujte konfiguraci.</li>
+                    <li>Řešení: Ujistěte se, že soubor modelu existuje na správné cestě.</li>
+                </ul>
+            </li>
+            <li><strong>Chyba při zjišťování kraje:</strong>
+                <ul>
+                    <li>Chyba: Error detecting region: ...</li>
+                    <li>Řešení: Zkontrolujte dostupnost OpenStreetMap API.</li>
+                </ul>
+            </li>
+            <li><strong>404 stránka:</strong>
+                <ul>
+                    <li>Chyba: Stránka nenalezena.</li>
+                    <li>Řešení: Uživatel je přesměrován na 404 stránku.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <hr>
+
+        <h2>9. Použité knihovny</h2>
+        <h3>Knihovny třetích stran:</h3>
+        <ul>
+            <li>Flask: Webový framework.</li>
+            <li>Pandas: Práce s daty.</li>
+            <li>Scikit-learn: Strojové učení (Random Forest).</li>
+            <li>Requests: HTTP požadavky.</li>
+            <li>Leaflet.js: Interaktivní mapy.</li>
+            <li>Bootstrap: Responzivní design.</li>
+        </ul>
+
+        <hr>
+
+        <h2>10. Závěrečné shrnutí</h2>
+        <p>Projekt <strong>BytMetric.cz</strong> je webová aplikace pro odhad cen pronájmů nemovitostí v České republice. Aplikace využívá umělou inteligenci (Random Forest) k výpočtu odhadu ceny na základě parametrů nemovitosti a její lokace. Projekt je plně responzivní, obsahuje navigaci, 404 stránku a podporu pro favicon.</p>
+        <h3>Klíčové vlastnosti:</h3>
+        <ul>
+            <li>Odhad ceny pronájmu.</li>
+            <li>Responzivní design.</li>
+            <li>Interaktivní mapa.</li>
+        </ul>
+        <p>Projekt je připraven k dalšímu rozšíření, například přidání databáze nebo dalších funkcí.</p>
+    </div>
+</body>
+</html>
