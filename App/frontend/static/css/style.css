@@ -1,81 +1,76 @@
 body {
-    padding: 20px;
-    font-family: Arial, sans-serif;
-}
-
-#map {
-    height: 400px;
-    width: 100%;
-    margin-bottom: 20px;
-    border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.container {
-    max-width: 900px;
-}
-
-.result-section {
-    display: none;
-    margin-top: 20px;
-    padding: 20px;
     background-color: #f8f9fa;
-    border-radius: 5px;
-    transition: all 0.3s ease;
-}
-
-.price-result {
-    font-size: 2em;
-    font-weight: bold;
-    color: #28a745;
-    padding: 10px;
-    background-color: #f0f0f0;
-    border-radius: 8px;
-    display: inline-block;
-}
-
-.loading {
-    display: none;
-    text-align: center;
-    margin: 20px 0;
-}
-
-.info-section {
-    margin-top: 20px;
-    padding: 10px;
-    background-color: #e9ecef;
-    border-radius: 5px;
-}
-
-.location-info {
-    margin-top: 15px;
-    padding: 8px 12px;
-    background-color: #f8f9fa;
-    border-radius: 4px;
-    border-left: 3px solid #007bff;
+    margin-bottom: 80px; /* Zmenšeno kvůli nižšímu footeru */
 }
 
 .card {
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 0.25rem;
+    margin-bottom: 1.5rem;
 }
 
-.card-header {
-    background-color: #f0f4f8;
+#map {
+    border-radius: 0.25rem;
+}
+
+#predictedPrice {
+    font-size: 2rem;
+    color: #0d6efd;
+    font-weight: bold;
+}
+
+.marker-position {
+    background-color: #ff0000;
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+    width: 15px;
+    height: 15px;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    z-index: 1000;
+    background-color: #212529;
+    color: white;
+    border-top: 1px solid #dee2e6;
+    font-size: 0.9rem;
+}
+
+footer h5 {
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+}
+
+footer .text-muted {
+    color: #c9c9c9 !important;
+    margin-bottom: 0.25rem;
+}
+
+footer hr.bg-secondary {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    background-color: #6c757d;
+    opacity: 0.5;
+}
+
+footer .contact-info {
+    display: inline-block;
+    margin-right: 1.5rem;
 }
 
 .btn-primary {
-    background-color: #0056b3;
-    border-color: #004085;
+    padding: 0.5rem 1.5rem;
 }
 
-.btn-primary:hover {
-    background-color: #003d7a;
-    border-color: #002752;
-}
-
-.alert-warning {
-    background-color: #fff3cd;
-    border-color: #ffeeba;
-    color: #856404;
+.centered-logo {
+    max-height: 276px;
+    width: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }

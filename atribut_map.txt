@@ -36,22 +36,29 @@ vzdalenost_centrum_km
 možná by byůlo lepší se užvatele 
 
 
-
-2025_Omegav2/
-|-- requirements.txt
-|-- install.py                   # Instalační soubor (vitvoří venv a nainstaluje vše z requirements.txt)
-|-- config.py                    # Konfigurační soubor
-|-- run.py                       # Hlavní spouštěcí soubor
-|-- models/                      # Adresář pro modely (regrese)
-|   `-- best_random_forest_model_RMSE_3377.6362.pkl
-|-- App/
-|   |-- backend/
-|   |   `-- app.py               # Backend aplikace
-|   `-- frontend/
-|       |-- templates/
-|       |   `-- index.html       # HTML šablona
-|       `-- static/
-|           |-- css/
-|           |   `-- style.css    # CSS styly
-|           `-- js/
-|               `-- main.js      # JavaScript kód
+omega_project/
+├── app/
+│   ├── backend/
+│   │   ├── app.py                          # Hlavní backend aplikace (Flask)
+│   │   ├── logger.py                       # Modul pro logování
+│   ├── frontend/
+│   │   ├── static/                         # Statické soubory (CSS, JS, favicon, obrázky)
+│   │   │   ├── css/
+│   │   │   │   └── style.css               # Upravené stylování webu (včetně fixního footeru)
+│   │   │   ├── js/
+│   │   │   │   └── main.js                 # JavaScript pro interaktivní funkce (např. mapa)
+│   │   │   ├── media/                      # Nová složka pro obrázky
+│   │   │   │   └── logo/
+│   │   │   │       └── logo_BytMetric_v5_AdobeExpress.png  # Logo aplikace
+│   │   │   └── favicon.ico                 # Ikona webu
+│   │   └── templates/                      # HTML šablony (Jinja2)
+│   │       ├── header.html                 # Sdílený header (navigace)
+│   │       ├── footer.html                 # Upravený sdílený footer (fixní na spodní části stránky)
+│   │       ├── index.html                  # Úvodní stránka (welcome page)
+│   │       ├── estimate.html               # Stránka pro odhad ceny nemovitostí (s logem)
+│   │       └── about.html                  # Stránka "O projektu"
+│   └── models/
+│       └── best_random_forest_model_RMSE_3377.6362.pkl  # Trénovaný model Random Forest
+├── config.py                               # Konfigurační soubor (nastavení aplikace, API, logování)
+├── run.py                                  # Spouštěcí soubor aplikace
+└── app.log                                 # Logovací soubor (generovaný při běhu aplikace)
