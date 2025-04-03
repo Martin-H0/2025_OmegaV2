@@ -5,14 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Odhad ceny pronájmu - ByMetric.cz</title>
     
-
     <link rel="icon" type="image/x-icon" href="/app/frontend/static/favicon.ico">
     <link rel="icon" type="image/png" href="/app/frontend/static/favicon.png">
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
     <link rel="apple-touch-icon" href="{{ url_for('static', filename='favicon.png') }}">
     <link rel="icon" sizes="192x192" href="{{ url_for('static', filename='media/android-icon-192x192.png') }}">
     <link rel="icon" sizes="512x512" href="{{ url_for('static', filename='media/android-icon-512x512.png') }}">
-
 
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
@@ -45,21 +43,25 @@
                                     <option value="1">Ano</option>
                                     <option value="0" selected>Ne</option>
                                 </select>
+                                <div class="invalid-feedback">Vyberte, zda se jedná o novou nemovitost.</div>
                             </div>
                             
                             <div class="mb-3">
                                 <label for="area" class="form-label">Podlahová plocha (m²)</label>
                                 <input type="number" class="form-control" id="area" min="1" required>
+                                <div class="invalid-feedback">Zadejte podlahovou plochu větší než 0.</div>
                             </div>
                             
                             <div class="mb-3">
                                 <label for="room_number" class="form-label">Počet pokojů</label>
-                                <input type="number" class="form-control" id="room_number" min="0" required>
+                                <input type="number" class="form-control" id="room_number" min="1" required>
+                                <div class="invalid-feedback">Zadejte počet pokojů větší než 0.</div>
                             </div>
                             
                             <div class="mb-3">
                                 <label for="kitchen_number" class="form-label">Počet kuchyní</label>
                                 <input type="number" class="form-control" id="kitchen_number" min="0" required>
+                                <div class="invalid-feedback">Zadejte počet kuchyní.</div>
                             </div>
                             
                             <div class="alert alert-info">
@@ -88,6 +90,9 @@
                             <li class="list-group-item">Vzdálenost od centra: <span id="distanceCenter"></span> km</li>
                             <li class="list-group-item">Lokace ve velkém městě: <span id="isBigCity"></span></li>
                         </ul>
+                        <div id="warningMessage" class="alert alert-warning mt-3" style="display: none;">
+                            <strong>Upozornění:</strong> Výsledek nemusí být přesný kvůli neobvyklým parametrům nemovitosti nebo lokalitě mimo Českou republiku.
+                        </div>
                     </div>
                 </div>
                 
