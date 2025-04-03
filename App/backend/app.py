@@ -96,6 +96,12 @@ def estimate():
 def about():
     return render_template('about.html')
 
+@app.route('/faq')
+def faq():
+    logger.info("Access to FAQ page")
+    return render_template('faq.html')
+
+
 
 @app.errorhandler(404)
 def page_not_found(e):
