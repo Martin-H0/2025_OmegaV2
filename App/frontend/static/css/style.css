@@ -64,8 +64,11 @@ body {
 }
 
 .navbar-toggler-icon {
-    background-color: white;
+    background-color:  var(--primary-green);
+    
 }
+
+
 
 /* Footer */
 
@@ -110,7 +113,21 @@ footer .contact-info {
     }
 }
 
+/* Jednotné formátování nadpisů */
+.page-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--primary-blue); /* Modrá z loga */
+    text-align: center;
+    margin-bottom: 1rem;
+}
 
+.page-subtitle {
+    font-size: 1.2rem;
+    color: var(--dark-gray);
+    text-align: center;
+    margin-bottom: 2rem;
+}
 
 
 
@@ -197,4 +214,40 @@ footer .contact-info {
     background-color: var(--primary-blue);
     color: white;
 
+}
+
+
+/* FAQ stránka */
+.faq-container {
+    background-color: var(--secondary-gray); /* Světle šedé pozadí */
+    flex: 1; /* Zajistí, že obsah stránky se roztáhne nad footer */
+    padding-bottom: 2rem; /* Přidáme spodní odsazení pro lepší vzhled */
+
+}
+
+.accordion {
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.accordion-header .accordion-button {
+    background-color: var(--secondary-gray);
+    color: var(--primary-blue);
+    font-weight: bold;
+    border: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/*zmněna barev po najetí*/
+.accordion-header .accordion-button:hover {
+    background-color: var(--primary-blue); 
+    color: var(--primary-green) !important; 
+}
+
+
+
+.accordion-body {
+    font-size: 1rem;
+    color: var(--dark-gray);
 }
