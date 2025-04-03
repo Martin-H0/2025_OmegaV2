@@ -9,6 +9,8 @@
 
 /* Tělo stránky */
 body {
+    padding-top: 56px;
+
     display: flex;
     flex-direction: column;
     min-height: 100vh; /* Zajistí, že stránka bude mít minimální výšku okna */
@@ -189,4 +191,10 @@ footer .contact-info {
 
 .text-success {
     color: var(--primary-green) !important;
+}
+
+.card-header {
+    background-color: var(--primary-blue);
+    color: white;
+
 }
