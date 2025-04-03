@@ -1,35 +1,86 @@
-
-/* Fixní header */
-.navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1030; /* Zajistí, že header bude nad ostatním obsahem */
+/* Základní barvy */
+:root {
+    --primary-blue: #02195d; /* Modrá z loga */
+    --primary-green: #41882a; /* Zelená z loga */
+    --secondary-gray: #f8f9fa; /* Světle šedá pro pozadí */
+    --dark-gray: #343a40; /* Tmavě šedá pro texty */
+    --button-blue: #0d6efd; /* Modrá pro tlačítka */
 }
 
-/* Základní styl pro body */
+/* Tělo stránky */
 body {
     padding-top: 56px;
+
     display: flex;
     flex-direction: column;
     min-height: 100vh; /* Zajistí, že stránka bude mít minimální výšku okna */
     margin: 0;
-    background-color: #f8f9fa;
+    background-color: var(--secondary-gray);
+    color: var(--dark-gray);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Obsah stránky */
+/* Kontejner obsahu stránky */
 .container {
     flex: 1; /* Zajistí, že obsah stránky se roztáhne nad footer */
 }
+/* Header */
+.navbar {
+    background-color: var(--primary-blue);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1030;
+    padding: 0.5rem 1rem;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-brand img {
+    max-height: 40px;
+    margin-right: 10px;
+}
+
+.navbar-nav .nav-link {
+    color: white;
+    font-weight: 500;
+    margin-right: 1rem;
+    transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    color: var(--primary-green);
+}
+
+.navbar-toggler {
+    border-color: white;
+}
+
+.navbar-toggler-icon {
+    background-color:  var(--primary-green);
+    
+}
+
+
+
+/* Footer */
 
 footer {
-    background-color: #212529;
+    background-color: var(--primary-blue);
     color: white;
     border-top: 1px solid #dee2e6;
+    text-align: center;
     font-size: 0.9rem;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
+    flex-shrink: 0;
 }
 
 
@@ -62,31 +113,141 @@ footer .contact-info {
     }
 }
 
-
-/* Logo */
-.centered-logo {
-    max-height: 276px;
-    width: auto;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+/* Jednotné formátování nadpisů */
+.page-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--primary-blue); /* Modrá z loga */
+    text-align: center;
+    margin-bottom: 1rem;
 }
 
-.img-fluid {
-    max-width: 100%;
-    height: auto;
-}
-
-
-
-/* 404 */
-
-img.img-fluid {
-    max-width: 500px;
-    height: auto;
-}
-
-.btn-primary {
-    padding: 0.5rem 1.5rem;
+.page-subtitle {
     font-size: 1.2rem;
+    color: var(--dark-gray);
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+
+
+/* Tlačítka */
+.btn-primary {
+    background-color: var(--button-blue);
+    border-color: var(--button-blue);
+    font-weight: bold;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-green);
+    border-color: var(--primary-green);
+}
+
+/* Welcome page */
+.welcome-container {
+    text-align: center;
+    padding: 100px 20px;
+    background-color: var(--primary-blue);
+    color: white;
+}
+
+.welcome-container h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.welcome-container p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+.welcome-container img {
+    max-width: 200px;
+    margin-bottom: 2rem;
+}
+
+.welcome-container .btn-primary {
+    font-size: 1.2rem;
+    padding: 0.75rem 1.5rem;
+}
+
+/* karty*/
+.card {
+    border-radius: 0.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Efekt nadzvednutí při najetí myší - pouze pro karty na welcome page */
+.welcome-container .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Styl pro obsah karet */
+.card-body img {
+    max-width: 80px;
+    margin-bottom: 1rem;
+}
+
+.card-body h3 {
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.card-body p {
+    font-size: 0.95rem;
+    color: var(--dark-gray);
+}
+
+/* Barvy pro text */
+.text-primary {
+    color: var(--primary-blue) !important;
+}
+
+.text-success {
+    color: var(--primary-green) !important;
+}
+
+.card-header {
+    background-color: var(--primary-blue);
+    color: white;
+
+}
+
+
+/* FAQ stránka */
+.faq-container {
+    background-color: var(--secondary-gray); /* Světle šedé pozadí */
+    flex: 1; /* Zajistí, že obsah stránky se roztáhne nad footer */
+    padding-bottom: 2rem; /* Přidáme spodní odsazení pro lepší vzhled */
+
+}
+
+.accordion {
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.accordion-header .accordion-button {
+    background-color: var(--secondary-gray);
+    color: var(--primary-blue);
+    font-weight: bold;
+    border: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/*zmněna barev po najetí*/
+.accordion-header .accordion-button:hover {
+    background-color: var(--primary-blue); 
+    color: var(--primary-green) !important; 
+}
+
+
+
+.accordion-body {
+    font-size: 1rem;
+    color: var(--dark-gray);
 }
