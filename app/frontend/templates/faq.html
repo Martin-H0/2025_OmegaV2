@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - Často kladené otázky | BytMetric.cz</title>
+    
+    <link rel="icon" type="image/x-icon" href="/app/frontend/static/favicon.ico">
+    <link rel="icon" type="image/png" href="/app/frontend/static/favicon.png">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='favicon.png') }}">
+    <link rel="icon" sizes="192x192" href="{{ url_for('static', filename='media/android-icon-192x192.png') }}">
+    <link rel="icon" sizes="512x512" href="{{ url_for('static', filename='media/android-icon-512x512.png') }}">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    {% with active_page = 'faq' %}
+    {% include 'header.html' %}
+    {% endwith %}
+
+    <div class="faq-container py-5">
+        <div class="container">
+            <h1 class="page-title">Často kladené otázky (FAQ)</h1>
+            <p class="page-subtitle">Zde najdete odpovědi na nejčastější otázky týkající se aplikace BytMetric.cz.</p>
+                
+            <div class="accordion shadow-lg rounded" id="faqAccordion">
+                <!-- Otázka 1 -->
+                <div class="accordion-item border-0">
+                    <h2 class="accordion-header" id="faqHeading1">
+                        <button class="accordion-button text-primary fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse1" aria-expanded="true" aria-controls="faqCollapse1">
+                            Jak přesné jsou odhady ceny pronájmu?
+                        </button>
+                    </h2>
+                    <div id="faqCollapse1" class="accordion-collapse collapse show" aria-labelledby="faqHeading1" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body text-muted">
+                            Odhady jsou založeny na modelu Random Forest, který analyzuje desítky faktorů. Přesnost odhadu závisí na kvalitě zadaných dat a dostupnosti informací o lokalitě. Mějte na paměti, že odhady jsou pouze orientační a nemohou zahrnovat všechny faktory, jako je například výhled z okna nebo stav nemovitosti.
+                            <div class = "alert alert-warning mt-3">
+                                <h6>
+                                    Upozornění
+                                </h6>
+                                Aplikace ByMetric.cz je navržena pro odhad cen pronájmu běžných nemovitostí. Pokud zadáte extrémní hodnoty, jako je velmi malá nebo naopak velmi velká podlahová plocha (např. 200+ m²) nebo neobvykle vysoký počet pokojů, odhad může být nepřesný.
+                                
+                                Důvodem je omezená dostupnost dat pro takové nemovitosti v trénovacím datasetu. V některých lokalitách, kde je dostatek dat, může aplikace poskytnout odhad i pro extrémní hodnoty, ale výsledky nemusí být spolehlivé. Doporučujeme používat aplikaci pro běžné nemovitosti, kde je přesnost odhadu vyšší. Pokud zadáte extrémní hodnoty, berte výsledky pouze jako orientační.
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item border-0">
+                    <h2 class="accordion-header" id="faqHeading2">
+                        <button class="accordion-button collapsed text-primary fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse2" aria-expanded="false" aria-controls="faqCollapse2">
+                            Jaké faktory ovlivňují cenu pronájmu?
+                        </button>
+                    </h2>
+                    <div id="faqCollapse2" class="accordion-collapse collapse" aria-labelledby="faqHeading2" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body text-muted">
+                            Mezi hlavní faktory patří:
+                            <ul>
+                                <li>Podlahová plocha nemovitosti</li>
+                                <li>Počet pokojů a kuchyní</li>
+                                <li>Stáří nemovitosti</li>
+                                <li>Geografická poloha (vzdálenost od centra, blízkost velkých měst)</li>
+                                <li>Typ lokality (velké město vs. venkov)</li>
+                            </ul>
+                            Další faktory, jako je stav nemovitosti nebo výhled, nejsou zahrnuty do odhadu.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item border-0">
+                    <h2 class="accordion-header" id="faqHeading3">
+                        <button class="accordion-button collapsed text-primary fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse3" aria-expanded="false" aria-controls="faqCollapse3">
+                            Je aplikace zdarma?
+                        </button>
+                    </h2>
+                    <div id="faqCollapse3" class="accordion-collapse collapse" aria-labelledby="faqHeading3" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body text-muted">
+                            Ano, aplikace ByMetric.cz je zcela zdarma. Můžete ji používat bez jakýchkoli poplatků. V budoucnu však mohou být přidány prémiové funkce, které budou zpoplatněny.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item border-0">
+                    <h2 class="accordion-header" id="faqHeading4">
+                        <button class="accordion-button collapsed text-primary fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse4" aria-expanded="false" aria-controls="faqCollapse4">
+                            Jak aplikace pracuje s daty?
+                        </button>
+                    </h2>
+                    <div id="faqCollapse4" class="accordion-collapse collapse" aria-labelledby="faqHeading4" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body text-muted">
+                            Aplikace pracuje pouze s daty, která zadáte. Vaše data nejsou ukládána ani sdílena s třetími stranami. Veškeré výpočty probíhají na serveru a výsledky jsou okamžitě zobrazeny. Dbáme na ochranu vašich osobních údajů.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item border-0">
+                    <h2 class="accordion-header" id="faqHeading5">
+                        <button class="accordion-button collapsed text-primary fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse5" aria-expanded="false" aria-controls="faqCollapse5">
+                            Jaké lokality aplikace podporuje?
+                        </button>
+                    </h2>
+                    <div id="faqCollapse5" class="accordion-collapse collapse" aria-labelledby="faqHeading5" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body text-muted">
+                            Aplikace ByMetric.cz je navržena pro odhad cen pronájmu nemovitostí v České republice. Podporuje všechny kraje a velká města v ČR. Pokud zadáte lokaci mimo ČR, odhad nemusí být přesný.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item border-0">
+                    <h2 class="accordion-header" id="faqHeading6">
+                        <button class="accordion-button collapsed text-primary fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse6" aria-expanded="false" aria-controls="faqCollapse6">
+                            Mohu aplikaci používat anonymně?
+                        </button>
+                    </h2>
+                    <div id="faqCollapse6" class="accordion-collapse collapse" aria-labelledby="faqHeading6" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body text-muted">
+                            Ano, aplikace nevyžaduje registraci ani přihlášení. Veškeré údaje, které zadáte, jsou použity pouze pro výpočet odhadu a nejsou ukládány ani sdíleny.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item border-0">
+                    <h2 class="accordion-header" id="faqHeading7">
+                        <button class="accordion-button collapsed text-primary fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse7" aria-expanded="false" aria-controls="faqCollapse7">
+                            Odkud BytMetric bere finance?
+                        </button>
+                    </h2>
+                    <div id="faqCollapse7" class="accordion-collapse collapse" aria-labelledby="faqHeading7" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body text-muted">
+                            BytMetric je fanouškovský projekt, který aktuálně nemá žádné příjmy. Všechny služby jsou poskytovány zdarma a jsou financovány z osobních zdrojů autora. V budoucnu se však může změnit financování projektu, například zavedením prémiových funkcí nebo jiných příjmů, abychom byli schopni rozšiřovat naše služby a zlepšovat jejich kvalitu.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item border-0">
+                    <h2 class="accordion-header" id="faqHeading8">
+                        <button class="accordion-button collapsed text-primary fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse8" aria-expanded="false" aria-controls="faqCollapse8">
+                            Jak mohu kontaktovat podporu?
+                        </button>
+                    </h2>
+                    <div id="faqCollapse8" class="accordion-collapse collapse" aria-labelledby="faqHeading8" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body text-muted">
+                            Pokud máte dotazy nebo potřebujete pomoc, můžete nás kontaktovat na emailu 
+                            <a href="moto: informuj.747@gmail.com"> informuj.747@gmail.com</a> 
+                            Rádi vám pomůžeme.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    
+    {% include 'footer.html' %}
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
