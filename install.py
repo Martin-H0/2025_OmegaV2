@@ -11,17 +11,17 @@ def install_venv():
     
     # Vytvoření virtuálního prostředí
     if not os.path.exists(venv_dir):
-        print("Vytvářím venv...")
+        print("create a virtual environment...")
         subprocess.run([sys.executable, "-m", "venv", venv_dir])
     else:
-        print("vytváření venv selhalo")
+        print("virtual environment creation failed")
     
     # Instalace požadovaných knihoven
     pip_executable = os.path.join(venv_dir, "Scripts" if os.name == "nt" else "bin", "pip")
-    print("Instaluji knihovny z requirements.txt")
+    print("installing libraries from requirements.txt")
     subprocess.run([pip_executable, "install", "-r", requirements_file])
     
-    print("Instalace dokončena?")
+    print("Installation complete")
 
 if __name__ == "__main__":
     install_venv()

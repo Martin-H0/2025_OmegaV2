@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation - ByMetric.cz</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        h1, h2, h3 {
+            color: #0d6efd;
+        }
+        pre {
+            background-color: #e9ecef;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .diagram {
+            text-align: center;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mb-4">Documentation - ByMetric.cz</h1>
+
+        <hr>
+
+        <h2>1. Basic Information</h2>
+        <p><strong>Project Name:</strong> ByMetric.cz – Intelligent Rental Price Estimation in the Czech Republic</p>
+        <p><strong>Author:</strong> Martin Hornch</p>
+        <p><strong>Contact:</strong> info@bytmetric.cz</p>
+        <p><strong>Date:</strong> 02.04.2025</p>
+        <p><strong>School:</strong> [Add school name]</p>
+        <p><strong>Type:</strong> School project</p>
+
+        <hr>
+
+        <h2>2. Architecture</h2>
+        <h3>Overview:</h3>
+        <p>The application is divided into <strong>frontend</strong>, <strong>backend</strong>, and <strong>data layer</strong>:</p>
+        <ul>
+            <li><strong>Frontend:</strong> Responsible for user interaction (HTML, CSS, JavaScript).</li>
+            <li><strong>Backend:</strong> Handles business logic and communication with the model (Flask).</li>
+            <li><strong>Data Layer:</strong> Contains the trained Random Forest model and processes data.</li>
+        </ul>
+
+        <h3>Deployment Diagram:</h3>
+        <div class="diagram">
+            <div class="mermaid">
+                graph TD
+                Client -->|HTTP Request| FlaskServer
+                FlaskServer -->|Model Prediction| RandomForestModel
+                FlaskServer -->|Response| Client
+            </div>
+        </div>
+
+        <h3>Use Case Diagram:</h3>
+        <div class="diagram">
+            <div class="mermaid">
+                graph TD
+                User -->|Enter Property Parameters| Application
+                User -->|Mark Location on Map| Application
+                Application -->|Calculate Rental Price| Model
+                Application -->|Display Results| User
+            </div>
+        </div>
+
+        <h3>Class Diagram:</h3>
+        <div class="diagram">
+            <div class="mermaid">
+                classDiagram
+                class FlaskApp {
+                    +run()
+                    +predict()
+                    +reload_model()
+                }
+                class RandomForestModel {
+                    +load_model()
+                    +predict()
+                }
+                class Logger {
+                    +info()
+                    +error()
+                    +warning()
+                }
+                FlaskApp --> RandomForestModel
+                FlaskApp --> Logger
+            </div>
+        </div>
+
+        <h3>Sequence Diagram:</h3>
+        <div class="diagram">
+            <div class="mermaid">
+                sequenceDiagram
+                participant User
+                participant Frontend
+                participant Backend
+                participant Model
+                User->>Frontend: Enter Property Parameters
+                Frontend->>Backend: Send Data
+                Backend->>Model: Predict Rental Price
+                Model-->>Backend: Return Prediction
+                Backend-->>Frontend: Display Results
+                Frontend-->>User: Show Rental Price
+            </div>
+        </div>
+
+        <hr>
+
+        <h2>3. Application Usage</h2>
+        <h3>How the application works:</h3>
+        <ol>
+            <li><strong>Enter property parameters:</strong> The user fills out a form with property parameters (area, number of rooms, number of kitchens, new construction).</li>
+            <li><strong>Mark location on the map:</strong> The user clicks on the map to mark the property location.</li>
+            <li><strong>Calculate rental price:</strong> The backend processes the data and uses the Random Forest model to calculate the estimated rental price.</li>
+            <li><strong>Display results:</strong> The user sees the estimated rental price and additional information about the location.</li>
+        </ol>
+
+        <hr>
+
+        <h2>4. Installation and Running</h2>
+        <h3>Method 1: Using install.py</h3>
+        <ol>
+            <li>Ensure Python (version 3.8 or higher) is installed.</li>
+            <li>Run the following command:
+                <pre>python install.py</pre>
+            </li>
+            <li>After installation, run the application:
+                <pre>python run.py</pre>
+            </li>
+        </ol>
+
+        <h3>Method 2: Using run.bat</h3>
+        <ol>
+            <li>Double-click the <strong>run.bat</strong> file.</li>
+            <li>The script will:
+                <ul>
+                    <li>Check if Python is installed (and install it if necessary).</li>
+                    <li>Run <strong>install.py</strong> to create a virtual environment and install dependencies.</li>
+                    <li>Activate the virtual environment.</li>
+                    <li>Run <strong>run.py</strong> to start the application.</li>
+                </ul>
+            </li>
+        </ol>
+
+        <hr>
+
+        <h2>5. Error Handling</h2>
+        <h3>Possible Errors:</h3>
+        <ul>
+            <li><strong>Model not loaded:</strong>
+                <ul>
+                    <li>Error: Model is not loaded. Check configuration.</li>
+                    <li>Solution: Ensure the model file exists at the correct path.</li>
+                </ul>
+            </li>
+            <li><strong>Error detecting region:</strong>
+                <ul>
+                    <li>Error: Error detecting region: ...</li>
+                    <li>Solution: Check the availability of the OpenStreetMap API.</li>
+                </ul>
+            </li>
+            <li><strong>404 Page:</strong>
+                <ul>
+                    <li>Error: Page not found.</li>
+                    <li>Solution: The user is redirected to the 404 page.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <hr>
+
+        <h2>6. Libraries</h2>
+        <h3>Third-party libraries:</h3>
+        <ul>
+            <li>Flask: Web framework.</li>
+            <li>Pandas: Data manipulation.</li>
+            <li>Scikit-learn: Machine learning (Random Forest).</li>
+            <li>Requests: HTTP requests.</li>
+            <li>Leaflet.js: Interactive maps.</li>
+            <li>Bootstrap: Responsive design.</li>
+        </ul>
+
+        <hr>
+
+        <h2>7. Conclusion</h2>
+        <p>The <strong>ByMetric.cz</strong> project is a web application for estimating rental prices in the Czech Republic. The application uses artificial intelligence (Random Forest) to calculate the estimated price based on property parameters and location. The project is fully responsive, includes navigation, error pages, and favicon support.</p>
+        <h3>Key Features:</h3>
+        <ul>
+            <li>Rental price estimation.</li>
+            <li>Responsive design.</li>
+            <li>Interactive map.</li>
+            <li>Support
