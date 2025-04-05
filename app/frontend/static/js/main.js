@@ -23,21 +23,21 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         marker = L.marker(e.latlng).addTo(map);
-        // marker.bindPopup("Vybraná lokace").openPopup();
+        marker.bindPopup("Vybraná lokace").openPopup();
     });
 
     document.getElementById("calculateBtn").addEventListener("click", function() {
         const new_property = document.getElementById("new").value;
         const area = document.getElementById("area").value;
         const room_number = document.getElementById("room_number").value;
-        const kitchen_number = document.getElementById("kitchen_number").value;
+        const kitchen_boolean = document.getElementById("kitchen_boolean").value;
         const lat = document.getElementById("lat").value;
         const lon = document.getElementById("lon").value;
 
         const formFields = [
-            { id: "area", value: area, min: 1 },
-            { id: "room_number", value: room_number, min: 1 },
-            { id: "kitchen_number", value: kitchen_number, min: 0 },
+            { id: "area", value: area, min: 1, max: 2000 },
+            { id: "room_number", value: room_number, min: 1, max: 7 },
+            { id: "kitchen_boolean", value: kitchen_boolean },
             { id: "lat", value: lat },
             { id: "lon", value: lon }
         ];
@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         formFields.forEach(field => {
             const input = document.getElementById(field.id);
-            if (!field.value || (field.min && field.value < field.min)) {
+            if (!field.value || (field.min && field.value < field.min) || (field.max && field.value > field.max)) {
                 input.classList.add("is-invalid");
                 isValid = false;
             } else {
@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", function() {
             new: parseInt(new_property),
             area: parseFloat(area),
             room_number: parseInt(room_number),
-            kitchen_number: parseInt(kitchen_number),
+            kitchen_boolean: parseInt(kitchen_boolean),
             lat: parseFloat(lat),
             lon: parseFloat(lon)
         };

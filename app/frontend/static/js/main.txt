@@ -1,243 +1,116 @@
 document.addEventListener("DOMContentLoaded", function() {
-    // Check if we're on the estimate page by looking for the map element
     const mapElement = document.getElementById("map");
     if (!mapElement) return;
-    
-    // Initialize map
+
     const map = L.map("map").setView([49.8, 15.5], 7);
-  
-    // Add OpenStreetMap layer
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
-  
-    // Variables for marker
+
     let marker = null;
-  
-    // Set click event on map
+
     map.on("click", function(e) {
-      const lat = e.latlng.lat;
-      const lon = e.latlng.lng;
-  
-      // Update hidden inputs
-      document.getElementById("lat").value = lat;
-      document.getElementById("lon").value = lon;
-  
-      // Update displayed coordinates
-      document.getElementById(
-        "coordinates"
-      ).textContent = `Souřadnice: ${lat.toFixed(6)}, ${lon.toFixed(6)}`;
-  
-      // Remove previous marker if exists
-      if (marker) {
-        map.removeLayer(marker);
-      }
-  
-      // Add new marker
-      marker = L.marker(e.latlng).addTo(map);
-      marker.bindPopup("Vybraná lokace").openPopup();
+        const lat = e.latlng.lat;
+        const lon = e.latlng.lng;
+
+        document.getElementById("lat").value = lat;
+        document.getElementById("lon").value = lon;
+
+        document.getElementById("coordinates").textContent = `Souřadnice: ${lat.toFixed(6)}, ${lon.toFixed(6)}`;
+
+        if (marker) {
+            map.removeLayer(marker);
+        }
+
+        marker = L.marker(e.latlng).addTo(map);
+        // marker.bindPopup("Vybraná lokace").openPopup();
     });
-  
-    // Handle calculate button
-    document
-      .getElementById("calculateBtn")
-      .addEventListener("click", function() {
-        // Form validation
+
+    document.getElementById("calculateBtn").addEventListener("click", function() {
         const new_property = document.getElementById("new").value;
         const area = document.getElementById("area").value;
         const room_number = document.getElementById("room_number").value;
         const kitchen_number = document.getElementById("kitchen_number").value;
         const lat = document.getElementById("lat").value;
         const lon = document.getElementById("lon").value;
-  
-        // Check if all fields are filled
-        if (!area || !room_number || !kitchen_number || !lat || !lon) {
-          alert(
-            "Prosím vyplňte všechny údaje a vyberte lokaci na mapě kliknutím."
-          );
-          return;
+
+        const formFields = [
+            { id: "area", value: area, min: 1, max: 2000 },
+            { id: "room_number", value: room_number, min: 1,  max: 7 },
+            { id: "kitchen_number", value: kitchen_number, min: 0 },
+            { id: "lat", value: lat },
+            { id: "lon", value: lon }
+        ];
+
+        let isValid = true;
+
+        formFields.forEach(field => {
+            const input = document.getElementById(field.id);
+            if (!field.value || (field.min && field.value < field.min)) {
+                input.classList.add("is-invalid");
+                isValid = false;
+            } else {
+                input.classList.remove("is-invalid");
+            }
+        });
+
+        if (!isValid) {
+            return;
         }
-  
-        // Show loading state
+
         const calculateBtn = document.getElementById("calculateBtn");
         const originalText = calculateBtn.textContent;
         calculateBtn.disabled = true;
         calculateBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Zpracovávám...';
-  
-        // Prepare data for sending
+
         const data = {
-          new: parseInt(new_property),
-          area: parseFloat(area),
-          room_number: parseInt(room_number),
-          kitchen_number: parseInt(kitchen_number),
-          lat: parseFloat(lat),
-          lon: parseFloat(lon)
+            new: parseInt(new_property),
+            area: parseFloat(area),
+            room_number: parseInt(room_number),
+            kitchen_number: parseInt(kitchen_number),
+            lat: parseFloat(lat),
+            lon: parseFloat(lon)
         };
-  
-        // Send POST request to API endpoint
+
         fetch("/predict", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(data)
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
         })
-          .then(response => {
+        .then(response => {
             if (!response.ok) {
-              throw new Error("Chyba při komunikaci se serverem");
+                throw new Error("Chyba při komunikaci se serverem");
             }
             return response.json();
-          })
-          .then(result => {
-            // Display result
+        })
+        .then(result => {
             document.getElementById("resultCard").style.display = "block";
-            document.getElementById(
-              "predictedPrice"
-            ).textContent = `${result.predicted_price.toLocaleString()} Kč`;
+            document.getElementById("predictedPrice").textContent = `${result.predicted_price.toLocaleString()} Kč`;
             document.getElementById("regionName").textContent = result.nazev_kraje;
             document.getElementById("regionCode").textContent = result.kraj_kod;
-            document.getElementById("cityName").textContent =
-              result.nazev_velkeho_mesta;
-            document.getElementById("cityCode").textContent =
-              result.kod_velkeho_mesta;
-            document.getElementById(
-              "distanceCenter"
-            ).textContent = result.vzdalenost_centrum_km;
-            document.getElementById("isBigCity").textContent =
-              result.je_velke_mesto === 1 ? "Ano" : "Ne";
-  
-            // Scroll to result
-            document.getElementById("resultCard").scrollIntoView({
-              behavior: "smooth"
-            });
-            
-            // Reset button
+            document.getElementById("cityName").textContent = result.nazev_velkeho_mesta;
+            document.getElementById("cityCode").textContent = result.kod_velkeho_mesta;
+            document.getElementById("distanceCenter").textContent = result.vzdalenost_centrum_km;
+            document.getElementById("isBigCity").textContent = result.je_velke_mesto === 1 ? "Ano" : "Ne";
+
+            const warningMessage = document.getElementById("warningMessage");
+            if (data.area < 10 || data.area > 200 || data.room_number > 7 || result.kraj_kod === 0) {
+                warningMessage.style.display = "block";
+            } else {
+                warningMessage.style.display = "none";
+            }
+
+            document.getElementById("resultCard").scrollIntoView({ behavior: "smooth" });
             calculateBtn.disabled = false;
             calculateBtn.textContent = originalText;
-          })
-          .catch(error => {
+        })
+        .catch(error => {
             console.error("Chyba:", error);
             alert("Nastala chyba při zpracování požadavku: " + error.message);
-            
-            // Reset button
             calculateBtn.disabled = false;
             calculateBtn.textContent = originalText;
-          });
-      });
-  });
-  
-
-
-
-// document.addEventListener("DOMContentLoaded", function() {
-//     // Inicializace mapy
-//     const map = L.map("map").setView([49.8, 15.5], 7);
-  
-//     // Přidání OpenStreetMap podkladu
-//     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-//       attribution:
-//         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-//     }).addTo(map);
-  
-//     // Proměnné pro marker
-//     let marker = null;
-  
-//     // Nastavení události kliknutí na mapu
-//     map.on("click", function(e) {
-//       const lat = e.latlng.lat;
-//       const lon = e.latlng.lng;
-  
-//       // Aktualizace skrytých inputů
-//       document.getElementById("lat").value = lat;
-//       document.getElementById("lon").value = lon;
-  
-//       // Aktualizace zobrazeného textu se souřadnicemi
-//       document.getElementById(
-//         "coordinates"
-//       ).textContent = `Souřadnice: ${lat.toFixed(6)}, ${lon.toFixed(6)}`;
-  
-//       // Odstranění předchozího markeru, pokud existuje
-//       if (marker) {
-//         map.removeLayer(marker);
-//       }
-  
-//       // Přidání nového markeru
-//       marker = L.marker(e.latlng).addTo(map);
-//       marker.bindPopup("Vybraná lokace").openPopup();
-//     });
-  
-//     // Obsluha tlačítka pro výpočet odhadu
-//     document
-//       .getElementById("calculateBtn")
-//       .addEventListener("click", function() {
-//         // Validace formuláře
-//         const new_property = document.getElementById("new").value;
-//         const area = document.getElementById("area").value;
-//         const room_number = document.getElementById("room_number").value;
-//         const kitchen_number = document.getElementById("kitchen_number").value;
-//         const lat = document.getElementById("lat").value;
-//         const lon = document.getElementById("lon").value;
-  
-//         // Kontrola, zda jsou všechna pole vyplněna
-//         if (!area || !room_number || !kitchen_number || !lat || !lon) {
-//           alert(
-//             "Prosím vyplňte všechny údaje a vyberte lokaci na mapě kliknutím."
-//           );
-//           return;
-//         }
-  
-//         // Příprava dat pro odeslání
-//         const data = {
-//           new: parseInt(new_property),
-//           area: parseFloat(area),
-//           room_number: parseInt(room_number),
-//           kitchen_number: parseInt(kitchen_number),
-//           lat: parseFloat(lat),
-//           lon: parseFloat(lon)
-//         };
-  
-//         // Odeslání POST požadavku na API endpoint
-//         fetch("/predict", {
-//           method: "POST",
-//           headers: {
-//             "Content-Type": "application/json"
-//           },
-//           body: JSON.stringify(data)
-//         })
-//           .then(response => {
-//             if (!response.ok) {
-//               throw new Error("Chyba při komunikaci se serverem");
-//             }
-//             return response.json();
-//           })
-//           .then(result => {
-//             // Zobrazení výsledku
-//             document.getElementById("resultCard").style.display = "block";
-//             document.getElementById(
-//               "predictedPrice"
-//             ).textContent = `${result.predicted_price.toLocaleString()} Kč`;
-//             document.getElementById("regionName").textContent = result.nazev_kraje;
-//             document.getElementById("regionCode").textContent = result.kraj_kod;
-//             document.getElementById("cityName").textContent =
-//               result.nazev_velkeho_mesta;
-//             document.getElementById("cityCode").textContent =
-//               result.kod_velkeho_mesta;
-//             document.getElementById(
-//               "distanceCenter"
-//             ).textContent = result.vzdalenost_centrum_km;
-//             document.getElementById("isBigCity").textContent =
-//               result.je_velke_mesto === 1 ? "Ano" : "Ne";
-  
-//             // Scrollování na výsledek
-//             document.getElementById("resultCard").scrollIntoView({
-//               behavior: "smooth"
-//             });
-//           })
-//           .catch(error => {
-//             console.error("Chyba:", error);
-//             alert("Nastala chyba při zpracování požadavku: " + error.message);
-//           });
-//       });
-//   });
-  
+        });
+    });
+});

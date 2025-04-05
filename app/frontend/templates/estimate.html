@@ -48,20 +48,23 @@
                             
                             <div class="mb-3">
                                 <label for="area" class="form-label">Podlahová plocha (m²)</label>
-                                <input type="number" class="form-control" id="area" min="1" required>
-                                <div class="invalid-feedback">Zadejte podlahovou plochu větší než 0.</div>
+                                <input type="number" class="form-control" id="area" min="1" max="2000" required>
+                                <div class="invalid-feedback">Zadejte podlahovou plochu mezi 1 a 2000 m².</div>
                             </div>
                             
                             <div class="mb-3">
                                 <label for="room_number" class="form-label">Počet pokojů</label>
-                                <input type="number" class="form-control" id="room_number" min="1" required>
-                                <div class="invalid-feedback">Zadejte počet pokojů větší než 0.</div>
+                                <input type="number" class="form-control" id="room_number" min="1" max="7" required>
+                                <div class="invalid-feedback">Zadejte počet pokojů mezi 1 a 7.</div>
                             </div>
                             
                             <div class="mb-3">
-                                <label for="kitchen_number" class="form-label">Počet kuchyní</label>
-                                <input type="number" class="form-control" id="kitchen_number" min="0" required>
-                                <div class="invalid-feedback">Zadejte počet kuchyní.</div>
+                                <label for="kitchen_boolean" class="form-label">Je kuchyň samostatná místnost?</label>
+                                <select class="form-select" id="kitchen_boolean" required>
+                                    <option value="1">Ano</option>
+                                    <option value="0" selected>Ne</option>
+                                </select>
+                                <div class="invalid-feedback">Vyberte, zda je kuchyň samostatná místnost.</div>
                             </div>
                             
                             <div class="alert alert-info">

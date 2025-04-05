@@ -14,11 +14,11 @@ def install_venv():
         print("Vytvářím venv...")
         subprocess.run([sys.executable, "-m", "venv", venv_dir])
     else:
-        print("go fuck yourself ")
+        print("vytváření venv selhalo")
     
     # Instalace požadovaných knihoven
     pip_executable = os.path.join(venv_dir, "Scripts" if os.name == "nt" else "bin", "pip")
-    print("Instaluji knihovny z requirements.txt yay...")
+    print("Instaluji knihovny z requirements.txt")
     subprocess.run([pip_executable, "install", "-r", requirements_file])
     
     print("Instalace dokončena?")
