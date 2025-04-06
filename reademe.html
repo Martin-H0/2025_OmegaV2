@@ -38,7 +38,7 @@
         <h2>1. Basic Information</h2>
         <p><strong>Project Name:</strong> ByMetric.cz – Intelligent Rental Price Estimation in the Czech Republic</p>
         <p><strong>Author:</strong> Martin Hornch</p>
-        <p><strong>Contact:</strong> info@bytmetric.cz</p>
+        <p><strong>Contact:</strong> informuj.747@gmail.com</p>
         <p><strong>Date:</strong> 02.04.2025</p>
         <p><strong>School:</strong> Střední průmyslová škola elektrotechnická Ječná 30</p>
         <p><strong>Type:</strong> School project</p>
@@ -73,6 +73,7 @@
                 User -->|Enter Property Parameters| Application
                 User -->|Mark Location on Map| Application
                 Application -->|Calculate Rental Price| Model
+                Model -->|Rental Price| Application
                 Application -->|Display Results| User
             </div>
         </div>
@@ -81,7 +82,7 @@
         <div class="diagram">
             <div class="mermaid">
                 classDiagram
-                class FlaskApp {
+                class app.py {
                     +run()
                     +predict()
                     +reload_model()
@@ -90,13 +91,13 @@
                     +load_model()
                     +predict()
                 }
-                class Logger {
+                class logger.py {
                     +info()
                     +error()
                     +warning()
                 }
-                FlaskApp --> RandomForestModel
-                FlaskApp --> Logger
+                app.py --> RandomForestModel
+                app.py --> logger.py
             </div>
         </div>
 
@@ -132,7 +133,9 @@
 
         <h2>4. Installation and Running</h2>
         <h3>Method 1: Using install.py</h3>
+        <p>Windows users are recommended to use method 2</p>
         <ol>
+            
             <li>Ensure Python (version 3.8 or higher) is installed.</li>
             <li>Run the following command:
                 <pre>python install.py</pre>
@@ -146,7 +149,7 @@
             </li>
         </ol>
 
-        <h3>Method 2: Using run.bat</h3>
+        <h3>Method 2: Using run.bat (for Windows)</h3>
         <ol>
             <li>Double-click the <strong>run.bat</strong> file.</li>
             <li>The script will:
@@ -209,8 +212,44 @@
         </ul>
 
         <hr>
+        <h2>7. Data Acquisition</h2>
+        <p>The data was obtained from the following sources:</p>
+        <ol>
+            <li><strong>Sreality.cz:</strong> The data was scraped from the Sreality.cz website.</li>
+            <li><strong>Data Cleaning:</strong> Several steps of data cleaning were performed to ensure its quality.</li>
+            <li><strong>Additional Information:</strong> Additional information was supplemented using OpenStreetMap.org (e.g., distance from the city center, district code).</li>
+            <li><strong>Apartment Label Decomposition:</strong> Apartment labels (e.g., 4+kk, 2+kk, 2+1) were broken down into:
+                <ul>
+                    <li>Number of rooms</li>
+                    <li>Separate kitchen (1/0)</li>
+                    <li>Bonus parameters</li>
+                </ul>
+            </li>
+        </ol>
+        <p>After these steps, the data was prepared for training the Random Forest model.</p>
 
-        <h2>7. Conclusion</h2>
+        <hr>
+
+        <h2>8. Sources</h2>
+        <p>The ByMetric.cz project was created based on the following sources:</p>
+        <ul>
+            <li><strong>Author:</strong> Martin Hornch</li>
+            <li><strong>Previous Projects:</strong> Project Alpha and other works.</li>
+            <li><strong>Consultations and Testing:</strong> Adam Hlaváčik, Ondřej Kábrt, Pavel Hornych, Tomáš Križko.</li>
+            <li><strong>AI:</strong> <a href="https://t3.chat/" target="_blank">t3.chat</a></li>
+            <li><strong>Internet:</strong> 
+                <a href="https://www.w3schools.com/" target="_blank">w3schools</a>, 
+                <a href="https://www.canva.com/" target="_blank">canva</a>, 
+                <a href="https://www.flaticon.com/" target="_blank">flaticon</a>, 
+                <a href="https://www.github.com" target="_blank">GitHub</a>
+            </li>        
+        </ul>
+
+        <hr>
+
+        
+
+        <h2>9. Conclusion</h2>
         <p>The <strong>ByMetric.cz</strong> project is a web application for estimating rental prices in the Czech Republic. The application uses artificial intelligence (Random Forest) to calculate the estimated price based on property parameters and location. The project is fully responsive, includes navigation, error pages, and favicon support.</p>
         <h3>Key Features:</h3>
         <ul>

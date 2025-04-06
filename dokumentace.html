@@ -38,7 +38,7 @@
         <h2>1. Základní informace</h2>
         <p><strong>Název projektu:</strong> ByMetric.cz – Inteligentní odhad ceny nájmu v České republice</p>
         <p><strong>Autor:</strong> Martin Hornch</p>
-        <p><strong>Kontakt:</strong> info@bytmetric.cz</p>
+        <p><strong>Kontakt:</strong> informuj.747@gmail.com</p>
         <p><strong>Datum:</strong> 02.04.2025</p>
         <p><strong>Škola:</strong> Střední průmyslová škola elektrotechnická Ječná 30</p>
         <p><strong>Typ:</strong> Školní projekt</p>
@@ -72,6 +72,7 @@
                 Uživatel -->|Zadání parametrů nemovitosti| Aplikace
                 Uživatel -->|Označení lokace na mapě| Aplikace
                 Aplikace -->|Výpočet ceny nájmu| Model
+                Model -->|Odhad ceny+ info o poloze| Aplikace
                 Aplikace -->|Zobrazení výsledků| Uživatel
             </div>
         </div>
@@ -80,7 +81,7 @@
         <div class="diagram">
             <div class="mermaid">
                 classDiagram
-                class FlaskApp {
+                class app.py {
                     +run()
                     +predict()
                     +reload_model()
@@ -89,13 +90,13 @@
                     +load_model()
                     +predict()
                 }
-                class Logger {
+                class logger.py {
                     +info()
                     +error()
                     +warning()
                 }
-                FlaskApp --> RandomForestModel
-                FlaskApp --> Logger
+                app.py --> RandomForestModel
+                app.py --> logger.py
             </div>
         </div>
 
@@ -131,7 +132,9 @@
 
         <h2>4. Instalace a spuštění</h2>
         <h3>Metoda 1: Použití install.py</h3>
+        <p>Uživatelům Windows se doporučuje použít metodu 2</p>
         <ol>
+            
             <li>Ujistěte se, že máte nainstalovaný Python (verze 3.8 nebo vyšší).</li>
             <li>Spusťte následující příkaz:
                 <pre>python install.py</pre>
@@ -145,7 +148,7 @@
             </li>
         </ol>
 
-        <h3>Metoda 2: Použití run.bat</h3>
+        <h3>Metoda 2: Použití run.bat (pro Windows)</h3>
         <ol>
             <li>Dvojklik na <strong>run.bat</strong> soubor.</li>
             <li>Skript provede:
@@ -208,7 +211,45 @@
 
         <hr>
 
-        <h2>7. Závěr</h2>
+        <h2>7. Způsob získání dat</h2>
+        <p>Data byla získána z následujících zdrojů:</p>
+        <ol>
+            <li><strong>Sreality.cz:</strong> Data byla nakrolována z webu Sreality.cz.</li>
+            <li><strong>Čištění dat:</strong> Proběhlo několik kroků čištění dat, aby byla zajištěna jejich kvalita.</li>
+            <li><strong>Doplnění informací:</strong> Další informace byly doplněny pomocí OpenStreetMap.org (např. vzdálenost od centra, kód kraje).</li>
+            <li><strong>Rozkládání označení bytů:</strong> Označení bytů (např. 4+kk, 2+kk, 2+1) byla rozložena na:
+                <ul>
+                    <li>Počet pokojů</li>
+                    <li>Oddělená kuchyň (1/0)</li>
+                    <li>Bonusové parametry</li>
+                </ul>
+            </li>
+        </ol>
+        <p>Po těchto krocích byla data připravena pro trénování modelu Random Forest.</p>
+
+        <hr>
+
+        <h2>8. Zdroje</h2>
+        <p>Projekt ByMetric.cz byl vytvořen na základě následujících zdrojů:</p>
+        <ul>
+            <li><strong>Autor:</strong> Martin Hornch</li>
+            <li><strong>Starší projekty:</strong> Projekt Alpha a další práce.</li>
+            <li><strong>Konzultace a testování:</strong> Adam Hlaváčik, Ondřej Kábrt, Pavel Hornych, Tomáš Križko.</li>
+            <li><strong>AI:</strong> <a href="https://t3.chat/" target="_blank">t3.chat</a></li>
+            <li><strong>Internet:</strong> 
+                <a href="https://www.w3schools.com/" target="_blank">w3schools</a>, 
+                <a href="https://www.canva.com/" target="_blank">canva</a>, 
+                <a href="https://www.flaticon.com/" target="_blank">flaticon</a>, 
+                <a href="https://www.github.com" target="_blank">GitHub</a>
+            </li>
+        </ul>
+
+        <hr>
+
+
+
+
+        <h2>8. Závěr</h2>
         <p>Projekt <strong>ByMetric.cz</strong> je webová aplikace pro odhad ceny nájmu v České republice. Aplikace používá umělou inteligenci (Random Forest) k výpočtu odhadované ceny na základě parametrů nemovitosti a lokace. Projekt je plně responzivní, obsahuje navigaci, chybové stránky a podporu favicon.</p>
         <h3>Klíčové vlastnosti:</h3>
         <ul>
