@@ -117,6 +117,33 @@
                 Frontend-->>User: Show Rental Price
             </div>
         </div>
+        <hr>
+
+        <h2>2.1 Design Patterns</h2>
+        <p>The following design patterns are implemented directly in the code:</p>
+        <ul>
+            <li>
+                <strong>Singleton</strong>
+                <p>Ensures that certain objects (e.g., logger or model) exist only in a single instance.</p>
+                <p><strong>Example:</strong> The logger (<code>Logger</code> class in <code>logger.py</code>) is initialized only once and shared across the application. The model (<code>load_model()</code> in <code>app.py</code>) is loaded at application startup and reused.</p>
+            </li>
+            <li>
+                <strong>Decorator</strong>
+                <p>Adds functionality to functions or methods without modifying them.</p>
+                <p><strong>Example:</strong> Flask routes use decorators (e.g., <code>@app.route('/')</code>, <code>@app.errorhandler(404)</code>).</p>
+            </li>
+            <li>
+                <strong>Template</strong>
+                <p>Allows reusable templates for generating user interfaces.</p>
+                <p><strong>Example:</strong> HTML templates (<code>header.html</code>, <code>footer.html</code>) are shared across pages using <code>{% include 'header.html' %}</code>.</p>
+            </li>
+            <li>
+                <strong>Builder</strong>
+                <p>Enables step-by-step construction of complex objects.</p>
+                <p><strong>Example:</strong> A DataFrame in <code>predict()</code> is built step by step from individual parameters (<code>pd.DataFrame({...})</code>).</p>
+            </li>
+        </ul>
+
 
         <hr>
 
@@ -246,6 +273,7 @@
         </ul>
 
         <hr>
+
 
         
 

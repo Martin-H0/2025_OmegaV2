@@ -116,7 +116,32 @@
                 Frontend-->>Uživatel: Zobrazení ceny nájmu
             </div>
         </div>
-
+        <hr>
+        <h2>2.1 Designové vzory</h2>
+        <p>Následující designové vzory jsou přímo implementovány v kódu:</p>
+        <ul>
+            <li>
+                <strong>Singleton</strong>
+                <p>Zajišťuje, že určité objekty (např. logger nebo model) existují pouze v jedné instanci.</p>
+                <p><strong>Příklad:</strong> Logger (<code>Logger</code> třída v <code>logger.py</code>) je inicializován pouze jednou a sdílen napříč aplikací. Model (<code>load_model()</code> v <code>app.py</code>) je načten při startu aplikace a opakovaně používán.</p>
+            </li>
+            <li>
+                <strong>Decorator</strong>
+                <p>Umožňuje přidávat funkcionalitu funkcím nebo metodám bez jejich změny.</p>
+                <p><strong>Příklad:</strong> Flask routy používají dekorátory (např. <code>@app.route('/')</code>, <code>@app.errorhandler(404)</code>).</p>
+            </li>
+            <li>
+                <strong>Template</strong>
+                <p>Umožňuje opakované použití šablon pro generování uživatelského rozhraní.</p>
+                <p><strong>Příklad:</strong> HTML šablony (<code>header.html</code>, <code>footer.html</code>) jsou sdíleny napříč stránkami pomocí <code>{% include 'header.html' %}</code>.</p>
+            </li>
+            <li>
+                <strong>Builder</strong>
+                <p>Umožňuje postupné sestavení složitých objektů.</p>
+                <p><strong>Příklad:</strong> DataFrame v <code>predict()</code> je sestaven postupně z jednotlivých parametrů (<code>pd.DataFrame({...})</code>).</p>
+            </li>
+        </ul>
+        
         <hr>
 
         <h2>3. Použití aplikace</h2>
