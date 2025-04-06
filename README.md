@@ -1,6 +1,4 @@
-Zde je přepsaná dokumentace ve formátu Markdown:
 
-```markdown
 # Documentation - ByMetric.cz
 
 ## 1. Basic Information
@@ -187,6 +185,4 @@ The **ByMetric.cz** project is a web application for estimating rental prices in
 - Responsive design.
 - Interactive map.
 - Support for error handling.
-```
 
-Tento Markdown soubor je plně kompatibilní s GitHubem a dalšími platformami, které podporují Markdown. Obsahuje všechny informace z původní HTML dokumentace.
